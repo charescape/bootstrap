@@ -1,6 +1,6 @@
 /**
  * --------------------------------------------------------------------------
- * Bootstrap (v5.0.0-beta1): dom/selector-engine.js
+ * Bootstrap (v5.0.0-beta2): dom/selector-engine.js
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * --------------------------------------------------------------------------
  */
@@ -23,9 +23,8 @@ const SelectorEngine = {
   },
 
   children(element, selector) {
-    const children = [].concat(...element.children)
-
-    return children.filter(child => child.matches(selector))
+    return [].concat(...element.children)
+      .filter(child => child.matches(selector))
   },
 
   parents(element, selector) {
