@@ -17,6 +17,8 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
+      - run: git status
+
       - run: npm install -dd
 
       - run: npm run dist
