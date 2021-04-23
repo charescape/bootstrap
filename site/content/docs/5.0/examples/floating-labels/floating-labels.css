@@ -55,11 +55,20 @@ body {
   color: transparent;
 }
 
+.form-label-group input:-ms-input-placeholder {
+  color: transparent;
+}
+
 .form-label-group input::placeholder {
   color: transparent;
 }
 
 .form-label-group input:not(:-moz-placeholder-shown) {
+  padding-top: 1.25rem;
+  padding-bottom: .25rem;
+}
+
+.form-label-group input:not(:-ms-input-placeholder) {
   padding-top: 1.25rem;
   padding-bottom: .25rem;
 }
@@ -70,6 +79,13 @@ body {
 }
 
 .form-label-group input:not(:-moz-placeholder-shown) ~ label {
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+  font-size: 12px;
+  color: #777;
+}
+
+.form-label-group input:not(:-ms-input-placeholder) ~ label {
   padding-top: .25rem;
   padding-bottom: .25rem;
   font-size: 12px;
