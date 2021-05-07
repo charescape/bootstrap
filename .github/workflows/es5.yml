@@ -19,7 +19,7 @@ jobs:
 
       - run: git status
 
-      - run: npm install -dd
+      - run: npm ci
 
       - run: npm run dist
 
