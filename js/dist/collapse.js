@@ -1,5 +1,5 @@
 /*!
-  * Bootstrap collapse.js v5.0.300 (https://getbootstrap.com/)
+  * Bootstrap collapse.js v5.0.310 (https://getbootstrap.com/)
   * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
