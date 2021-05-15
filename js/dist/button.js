@@ -1,5 +1,5 @@
 /*!
-  * Bootstrap button.js v5.0.1 (https://getbootstrap.com/)
+  * Bootstrap button.js v5.0.111 (https://getbootstrap.com/)
   * Copyright 2011-2021 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
@@ -15,10 +15,41 @@
   var EventHandler__default = /*#__PURE__*/_interopDefaultLegacy(EventHandler);
   var BaseComponent__default = /*#__PURE__*/_interopDefaultLegacy(BaseComponent);
 
-  const getjQuery = () => {
-    const {
-      jQuery
-    } = window;
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+
+    _setPrototypeOf(subClass, superClass);
+  }
+
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+
+    return _setPrototypeOf(o, p);
+  }
+
+  var getjQuery = function getjQuery() {
+    var _window = window,
+        jQuery = _window.jQuery;
 
     if (jQuery && !document.body.hasAttribute('data-bs-no-jquery')) {
       return jQuery;
@@ -27,7 +58,7 @@
     return null;
   };
 
-  const onDOMContentLoaded = callback => {
+  var onDOMContentLoaded = function onDOMContentLoaded(callback) {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', callback);
     } else {
@@ -35,18 +66,18 @@
     }
   };
 
-  const defineJQueryPlugin = plugin => {
-    onDOMContentLoaded(() => {
-      const $ = getjQuery();
+  var defineJQueryPlugin = function defineJQueryPlugin(plugin) {
+    onDOMContentLoaded(function () {
+      var $ = getjQuery();
       /* istanbul ignore if */
 
       if ($) {
-        const name = plugin.NAME;
-        const JQUERY_NO_CONFLICT = $.fn[name];
+        var name = plugin.NAME;
+        var JQUERY_NO_CONFLICT = $.fn[name];
         $.fn[name] = plugin.jQueryInterface;
         $.fn[name].Constructor = plugin;
 
-        $.fn[name].noConflict = () => {
+        $.fn[name].noConflict = function () {
           $.fn[name] = JQUERY_NO_CONFLICT;
           return plugin.jQueryInterface;
         };
@@ -55,46 +86,43 @@
   };
 
   /**
-   * --------------------------------------------------------------------------
-   * Bootstrap (v5.0.1): button.js
-   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-   * --------------------------------------------------------------------------
-   */
-  /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'button';
-  const DATA_KEY = 'bs.button';
-  const EVENT_KEY = `.${DATA_KEY}`;
-  const DATA_API_KEY = '.data-api';
-  const CLASS_NAME_ACTIVE = 'active';
-  const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="button"]';
-  const EVENT_CLICK_DATA_API = `click${EVENT_KEY}${DATA_API_KEY}`;
+  var NAME = 'button';
+  var DATA_KEY = 'bs.button';
+  var EVENT_KEY = "." + DATA_KEY;
+  var DATA_API_KEY = '.data-api';
+  var CLASS_NAME_ACTIVE = 'active';
+  var SELECTOR_DATA_TOGGLE = '[data-bs-toggle="button"]';
+  var EVENT_CLICK_DATA_API = "click" + EVENT_KEY + DATA_API_KEY;
   /**
    * ------------------------------------------------------------------------
    * Class Definition
    * ------------------------------------------------------------------------
    */
 
-  class Button extends BaseComponent__default['default'] {
-    // Getters
-    static get NAME() {
-      return NAME;
-    } // Public
+  var Button = /*#__PURE__*/function (_BaseComponent) {
+    _inheritsLoose(Button, _BaseComponent);
 
+    function Button() {
+      return _BaseComponent.apply(this, arguments) || this;
+    }
 
-    toggle() {
+    var _proto = Button.prototype;
+
+    // Public
+    _proto.toggle = function toggle() {
       // Toggle class and sync the `aria-pressed` attribute with the return value of the `.toggle()` method
       this._element.setAttribute('aria-pressed', this._element.classList.toggle(CLASS_NAME_ACTIVE));
     } // Static
+    ;
 
-
-    static jQueryInterface(config) {
+    Button.jQueryInterface = function jQueryInterface(config) {
       return this.each(function () {
-        let data = Data__default['default'].get(this, DATA_KEY);
+        var data = Data__default['default'].get(this, DATA_KEY);
 
         if (!data) {
           data = new Button(this);
@@ -104,9 +132,18 @@
           data[config]();
         }
       });
-    }
+    };
 
-  }
+    _createClass(Button, null, [{
+      key: "NAME",
+      get: // Getters
+      function get() {
+        return NAME;
+      }
+    }]);
+
+    return Button;
+  }(BaseComponent__default['default']);
   /**
    * ------------------------------------------------------------------------
    * Data Api implementation
@@ -114,10 +151,10 @@
    */
 
 
-  EventHandler__default['default'].on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, event => {
+  EventHandler__default['default'].on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {
     event.preventDefault();
-    const button = event.target.closest(SELECTOR_DATA_TOGGLE);
-    let data = Data__default['default'].get(button, DATA_KEY);
+    var button = event.target.closest(SELECTOR_DATA_TOGGLE);
+    var data = Data__default['default'].get(button, DATA_KEY);
 
     if (!data) {
       data = new Button(button);
