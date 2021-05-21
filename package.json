@@ -1,7 +1,7 @@
 {
   "name": "@charescape/bootstrap",
   "description": "The most popular front-end framework for developing responsive, mobile first projects on the web.",
-  "version": "5.0.311",
+  "version": "5.0.312",
   "config": {
     "version_short": "5.0"
   },
