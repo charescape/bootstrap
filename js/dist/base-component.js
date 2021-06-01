@@ -15,21 +15,37 @@
   var SelectorEngine__default = /*#__PURE__*/_interopDefaultLegacy(SelectorEngine);
   var EventHandler__default = /*#__PURE__*/_interopDefaultLegacy(EventHandler);
 
-  const MILLISECONDS_MULTIPLIER = 1000;
-  const TRANSITION_END = 'transitionend'; // Shoutout AngusCroll (https://goo.gl/pxwQGp)
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
 
-  const getTransitionDurationFromElement = element => {
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  var MILLISECONDS_MULTIPLIER = 1000;
+  var TRANSITION_END = 'transitionend'; // Shoutout AngusCroll (https://goo.gl/pxwQGp)
+
+  var getTransitionDurationFromElement = function getTransitionDurationFromElement(element) {
     if (!element) {
       return 0;
     } // Get transition-duration of the element
 
 
-    let {
-      transitionDuration,
-      transitionDelay
-    } = window.getComputedStyle(element);
-    const floatTransitionDuration = Number.parseFloat(transitionDuration);
-    const floatTransitionDelay = Number.parseFloat(transitionDelay); // Return 0 if element or transition duration is not found
+    var _window$getComputedSt = window.getComputedStyle(element),
+        transitionDuration = _window$getComputedSt.transitionDuration,
+        transitionDelay = _window$getComputedSt.transitionDelay;
+
+    var floatTransitionDuration = Number.parseFloat(transitionDuration);
+    var floatTransitionDelay = Number.parseFloat(transitionDelay); // Return 0 if element or transition duration is not found
 
     if (!floatTransitionDuration && !floatTransitionDelay) {
       return 0;
@@ -41,11 +57,11 @@
     return (Number.parseFloat(transitionDuration) + Number.parseFloat(transitionDelay)) * MILLISECONDS_MULTIPLIER;
   };
 
-  const triggerTransitionEnd = element => {
+  var triggerTransitionEnd = function triggerTransitionEnd(element) {
     element.dispatchEvent(new Event(TRANSITION_END));
   };
 
-  const isElement = obj => {
+  var isElement = function isElement(obj) {
     if (!obj || typeof obj !== 'object') {
       return false;
     }
@@ -57,7 +73,7 @@
     return typeof obj.nodeType !== 'undefined';
   };
 
-  const getElement = obj => {
+  var getElement = function getElement(obj) {
     if (isElement(obj)) {
       // it's a jQuery object or a node element
       return obj.jquery ? obj[0] : obj;
@@ -70,10 +86,10 @@
     return null;
   };
 
-  const emulateTransitionEnd = (element, duration) => {
-    let called = false;
-    const durationPadding = 5;
-    const emulatedDuration = duration + durationPadding;
+  var emulateTransitionEnd = function emulateTransitionEnd(element, duration) {
+    var called = false;
+    var durationPadding = 5;
+    var emulatedDuration = duration + durationPadding;
 
     function listener() {
       called = true;
@@ -81,35 +97,29 @@
     }
 
     element.addEventListener(TRANSITION_END, listener);
-    setTimeout(() => {
+    setTimeout(function () {
       if (!called) {
         triggerTransitionEnd(element);
       }
     }, emulatedDuration);
   };
 
-  const execute = callback => {
+  var execute = function execute(callback) {
     if (typeof callback === 'function') {
       callback();
     }
   };
 
   /**
-   * --------------------------------------------------------------------------
-   * Bootstrap (v5.0.1): base-component.js
-   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-   * --------------------------------------------------------------------------
-   */
-  /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
 
-  const VERSION = '5.0.1';
+  var VERSION = '5.0.1';
 
-  class BaseComponent {
-    constructor(element) {
+  var BaseComponent = /*#__PURE__*/function () {
+    function BaseComponent(element) {
       element = getElement(element);
 
       if (!element) {
@@ -120,48 +130,65 @@
       Data__default['default'].set(this._element, this.constructor.DATA_KEY, this);
     }
 
-    dispose() {
+    var _proto = BaseComponent.prototype;
+
+    _proto.dispose = function dispose() {
+      var _this = this;
+
       Data__default['default'].remove(this._element, this.constructor.DATA_KEY);
       EventHandler__default['default'].off(this._element, this.constructor.EVENT_KEY);
-      Object.getOwnPropertyNames(this).forEach(propertyName => {
-        this[propertyName] = null;
+      Object.getOwnPropertyNames(this).forEach(function (propertyName) {
+        _this[propertyName] = null;
       });
-    }
+    };
 
-    _queueCallback(callback, element, isAnimated = true) {
+    _proto._queueCallback = function _queueCallback(callback, element, isAnimated) {
+      if (isAnimated === void 0) {
+        isAnimated = true;
+      }
+
       if (!isAnimated) {
         execute(callback);
         return;
       }
 
-      const transitionDuration = getTransitionDurationFromElement(element);
-      EventHandler__default['default'].one(element, 'transitionend', () => execute(callback));
+      var transitionDuration = getTransitionDurationFromElement(element);
+      EventHandler__default['default'].one(element, 'transitionend', function () {
+        return execute(callback);
+      });
       emulateTransitionEnd(element, transitionDuration);
     }
     /** Static */
+    ;
 
-
-    static getInstance(element) {
+    BaseComponent.getInstance = function getInstance(element) {
       return Data__default['default'].get(element, this.DATA_KEY);
-    }
+    };
 
-    static get VERSION() {
-      return VERSION;
-    }
+    _createClass(BaseComponent, null, [{
+      key: "VERSION",
+      get: function get() {
+        return VERSION;
+      }
+    }, {
+      key: "NAME",
+      get: function get() {
+        throw new Error('You have to implement the static method "NAME", for each component!');
+      }
+    }, {
+      key: "DATA_KEY",
+      get: function get() {
+        return "bs." + this.NAME;
+      }
+    }, {
+      key: "EVENT_KEY",
+      get: function get() {
+        return "." + this.DATA_KEY;
+      }
+    }]);
 
-    static get NAME() {
-      throw new Error('You have to implement the static method "NAME", for each component!');
-    }
-
-    static get DATA_KEY() {
-      return `bs.${this.NAME}`;
-    }
-
-    static get EVENT_KEY() {
-      return `.${this.DATA_KEY}`;
-    }
-
-  }
+    return BaseComponent;
+  }();
 
   return BaseComponent;
 

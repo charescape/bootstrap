@@ -15,11 +15,43 @@
   var EventHandler__default = /*#__PURE__*/_interopDefaultLegacy(EventHandler);
   var BaseComponent__default = /*#__PURE__*/_interopDefaultLegacy(BaseComponent);
 
-  const getSelector = element => {
-    let selector = element.getAttribute('data-bs-target');
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+
+    _setPrototypeOf(subClass, superClass);
+  }
+
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+
+    return _setPrototypeOf(o, p);
+  }
+
+  var getSelector = function getSelector(element) {
+    var selector = element.getAttribute('data-bs-target');
 
     if (!selector || selector === '#') {
-      let hrefAttr = element.getAttribute('href'); // The only valid content that could double as a selector are IDs or classes,
+      var hrefAttr = element.getAttribute('href'); // The only valid content that could double as a selector are IDs or classes,
       // so everything starting with `#` or `.`. If a "real" URL is used as the selector,
       // `document.querySelector` will rightfully complain it is invalid.
       // See https://github.com/twbs/bootstrap/issues/32273
@@ -30,7 +62,7 @@
 
 
       if (hrefAttr.includes('#') && !hrefAttr.startsWith('#')) {
-        hrefAttr = `#${hrefAttr.split('#')[1]}`;
+        hrefAttr = "#" + hrefAttr.split('#')[1];
       }
 
       selector = hrefAttr && hrefAttr !== '#' ? hrefAttr.trim() : null;
@@ -39,15 +71,14 @@
     return selector;
   };
 
-  const getElementFromSelector = element => {
-    const selector = getSelector(element);
+  var getElementFromSelector = function getElementFromSelector(element) {
+    var selector = getSelector(element);
     return selector ? document.querySelector(selector) : null;
   };
 
-  const getjQuery = () => {
-    const {
-      jQuery
-    } = window;
+  var getjQuery = function getjQuery() {
+    var _window = window,
+        jQuery = _window.jQuery;
 
     if (jQuery && !document.body.hasAttribute('data-bs-no-jquery')) {
       return jQuery;
@@ -56,7 +87,7 @@
     return null;
   };
 
-  const onDOMContentLoaded = callback => {
+  var onDOMContentLoaded = function onDOMContentLoaded(callback) {
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', callback);
     } else {
@@ -64,18 +95,18 @@
     }
   };
 
-  const defineJQueryPlugin = plugin => {
-    onDOMContentLoaded(() => {
-      const $ = getjQuery();
+  var defineJQueryPlugin = function defineJQueryPlugin(plugin) {
+    onDOMContentLoaded(function () {
+      var $ = getjQuery();
       /* istanbul ignore if */
 
       if ($) {
-        const name = plugin.NAME;
-        const JQUERY_NO_CONFLICT = $.fn[name];
+        var name = plugin.NAME;
+        var JQUERY_NO_CONFLICT = $.fn[name];
         $.fn[name] = plugin.jQueryInterface;
         $.fn[name].Constructor = plugin;
 
-        $.fn[name].noConflict = () => {
+        $.fn[name].noConflict = function () {
           $.fn[name] = JQUERY_NO_CONFLICT;
           return plugin.jQueryInterface;
         };
@@ -84,45 +115,42 @@
   };
 
   /**
-   * --------------------------------------------------------------------------
-   * Bootstrap (v5.0.1): alert.js
-   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
-   * --------------------------------------------------------------------------
-   */
-  /**
    * ------------------------------------------------------------------------
    * Constants
    * ------------------------------------------------------------------------
    */
 
-  const NAME = 'alert';
-  const DATA_KEY = 'bs.alert';
-  const EVENT_KEY = `.${DATA_KEY}`;
-  const DATA_API_KEY = '.data-api';
-  const SELECTOR_DISMISS = '[data-bs-dismiss="alert"]';
-  const EVENT_CLOSE = `close${EVENT_KEY}`;
-  const EVENT_CLOSED = `closed${EVENT_KEY}`;
-  const EVENT_CLICK_DATA_API = `click${EVENT_KEY}${DATA_API_KEY}`;
-  const CLASS_NAME_ALERT = 'alert';
-  const CLASS_NAME_FADE = 'fade';
-  const CLASS_NAME_SHOW = 'show';
+  var NAME = 'alert';
+  var DATA_KEY = 'bs.alert';
+  var EVENT_KEY = "." + DATA_KEY;
+  var DATA_API_KEY = '.data-api';
+  var SELECTOR_DISMISS = '[data-bs-dismiss="alert"]';
+  var EVENT_CLOSE = "close" + EVENT_KEY;
+  var EVENT_CLOSED = "closed" + EVENT_KEY;
+  var EVENT_CLICK_DATA_API = "click" + EVENT_KEY + DATA_API_KEY;
+  var CLASS_NAME_ALERT = 'alert';
+  var CLASS_NAME_FADE = 'fade';
+  var CLASS_NAME_SHOW = 'show';
   /**
    * ------------------------------------------------------------------------
    * Class Definition
    * ------------------------------------------------------------------------
    */
 
-  class Alert extends BaseComponent__default['default'] {
-    // Getters
-    static get NAME() {
-      return NAME;
-    } // Public
+  var Alert = /*#__PURE__*/function (_BaseComponent) {
+    _inheritsLoose(Alert, _BaseComponent);
 
+    function Alert() {
+      return _BaseComponent.apply(this, arguments) || this;
+    }
 
-    close(element) {
-      const rootElement = element ? this._getRootElement(element) : this._element;
+    var _proto = Alert.prototype;
 
-      const customEvent = this._triggerCloseEvent(rootElement);
+    // Public
+    _proto.close = function close(element) {
+      var rootElement = element ? this._getRootElement(element) : this._element;
+
+      var customEvent = this._triggerCloseEvent(rootElement);
 
       if (customEvent === null || customEvent.defaultPrevented) {
         return;
@@ -130,35 +158,39 @@
 
       this._removeElement(rootElement);
     } // Private
+    ;
 
+    _proto._getRootElement = function _getRootElement(element) {
+      return getElementFromSelector(element) || element.closest("." + CLASS_NAME_ALERT);
+    };
 
-    _getRootElement(element) {
-      return getElementFromSelector(element) || element.closest(`.${CLASS_NAME_ALERT}`);
-    }
-
-    _triggerCloseEvent(element) {
+    _proto._triggerCloseEvent = function _triggerCloseEvent(element) {
       return EventHandler__default['default'].trigger(element, EVENT_CLOSE);
-    }
+    };
 
-    _removeElement(element) {
+    _proto._removeElement = function _removeElement(element) {
+      var _this = this;
+
       element.classList.remove(CLASS_NAME_SHOW);
-      const isAnimated = element.classList.contains(CLASS_NAME_FADE);
+      var isAnimated = element.classList.contains(CLASS_NAME_FADE);
 
-      this._queueCallback(() => this._destroyElement(element), element, isAnimated);
-    }
+      this._queueCallback(function () {
+        return _this._destroyElement(element);
+      }, element, isAnimated);
+    };
 
-    _destroyElement(element) {
+    _proto._destroyElement = function _destroyElement(element) {
       if (element.parentNode) {
         element.parentNode.removeChild(element);
       }
 
       EventHandler__default['default'].trigger(element, EVENT_CLOSED);
     } // Static
+    ;
 
-
-    static jQueryInterface(config) {
+    Alert.jQueryInterface = function jQueryInterface(config) {
       return this.each(function () {
-        let data = Data__default['default'].get(this, DATA_KEY);
+        var data = Data__default['default'].get(this, DATA_KEY);
 
         if (!data) {
           data = new Alert(this);
@@ -168,9 +200,9 @@
           data[config](this);
         }
       });
-    }
+    };
 
-    static handleDismiss(alertInstance) {
+    Alert.handleDismiss = function handleDismiss(alertInstance) {
       return function (event) {
         if (event) {
           event.preventDefault();
@@ -178,9 +210,18 @@
 
         alertInstance.close(this);
       };
-    }
+    };
 
-  }
+    _createClass(Alert, null, [{
+      key: "NAME",
+      get: // Getters
+      function get() {
+        return NAME;
+      }
+    }]);
+
+    return Alert;
+  }(BaseComponent__default['default']);
   /**
    * ------------------------------------------------------------------------
    * Data Api implementation
